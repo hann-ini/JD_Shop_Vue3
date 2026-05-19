@@ -1,8 +1,7 @@
 <template>
   <div class="common-layout">
-    <router-view />
-
-    <el-footer>
+      <TopBar />
+      <router-view />
       <el-descriptions
     title="页面信息"
     :column="4"
@@ -20,19 +19,18 @@
       上海、杭州、苏州、南京、深圳、厦门
     </el-descriptions-item>
   </el-descriptions>
-    </el-footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { ComponentSize } from 'element-plus'
-import { el } from 'element-plus/es/locales.mjs'
+import TopBar from './components/TopBar.vue'
 
 const size = ref<ComponentSize>('default')
 
 const blockMargin = computed(() => {
-  const marginMap = {
+  const marginMap: Record<string, string> = {
     large: '32px',
     default: '28px',
     small: '24px',
@@ -44,8 +42,15 @@ const blockMargin = computed(() => {
 </script>
 
 <style>
+.common-layout {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 .el-descriptions {
-  margin-top: 20px;
+  margin:20px auto;
+  width: 1200px;
 }
 .common-layout {
   min-height: 100vh;
