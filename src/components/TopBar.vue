@@ -21,8 +21,7 @@
 
 <style scoped>
 .top-bar {
-  background: #e3e4e5;
-  border-bottom: 1px solid #ddd;
+  background: #fff;
   width: 100%;
 }
 

@@ -38,6 +38,12 @@
             <div class="carousel-item active">
               <img :src="banners[currentBanner]" alt="banner" />
             </div>
+            <div class="carousel-btn carousel-prev" @click="prevBanner">
+              <span>&lt;</span>
+            </div>
+            <div class="carousel-btn carousel-next" @click="nextBanner">
+              <span>&gt;</span>
+            </div>
             <div class="carousel-dots">
               <span 
                 v-for="(_item, index) in banners" 
@@ -46,6 +52,15 @@
                 @click="currentBanner = index"
               ></span>
             </div>
+          </div>
+        </div>
+        <div class="right-area">
+          <div 
+            class="right-img-item" 
+            v-for="(img, index) in rightImages" 
+            :key="index"
+          >
+            <img :src="img" alt="" />
           </div>
         </div>
       </div>
@@ -103,6 +118,13 @@ const banners = [
   '/static/ad_images/1.png',
   '/static/ad_images/2.png',
   '/static/ad_images/3.png'
+]
+
+const rightImages = [
+  '/static/ad_images/images_pc_pc_theme_hardware_tools_new.png',
+  '/static/ad_images/images_pc_pc_theme_daily_necessities_new.png',
+  '/static/ad_images/images_pc_pc_theme_beauty_new.png',
+  '/static/ad_images/images_pc_pc_theme_state_subsidies_new.png'
 ]
 
 const goodsList = ref([
@@ -164,11 +186,18 @@ const goodsList = ref([
   }
 ])
 
+const prevBanner = () => {
+  currentBanner.value = (currentBanner.value - 1 + banners.length) % banners.length
+}
+const nextBanner = () => {
+  currentBanner.value = (currentBanner.value + 1) % banners.length
+}
+
 let timer: any = null
 onMounted(() => {
   timer = setInterval(() => {
-    currentBanner.value = (currentBanner.value + 1) % banners.length
-  }, 3000)
+    nextBanner()
+  }, 5000)
 })
 onUnmounted(() => {
   if (timer) clearInterval(timer)
@@ -183,7 +212,7 @@ onUnmounted(() => {
 }
 
 .header-content {
-  width: 1200px;
+  width: 1400px;
   margin: 0 auto;
   height: 140px;
   display: flex;
@@ -195,12 +224,15 @@ onUnmounted(() => {
   width: 190px;
   height: 120px;
   object-fit: contain;
+  position: relative;
+  left: 35px;
+  top: 10px;
 }
 
 .search-box {
   flex: 1;
   position: relative;
-  left: 200px;
+  left: 340px;
   /* align-items: center; */
 }
 
@@ -234,11 +266,11 @@ onUnmounted(() => {
   background: #fff;
   border-radius: 16px;
   margin: 16px auto;
-  width: 1200px;
+  width: 1400px;
 }
 
 .nav-content {
-  width: 1200px;
+  width: 1400px;
   padding: 16px;
   display: flex;
   gap: 10px;
@@ -248,6 +280,9 @@ onUnmounted(() => {
   width: 240px;
   background: #f7f7f7;
   border-radius: 16px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
 }
 
 .category-title {
@@ -260,6 +295,11 @@ onUnmounted(() => {
 
 .category-list {
   border-top: none;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .category-item {
@@ -277,28 +317,77 @@ onUnmounted(() => {
   border-radius: 16px 0px 0px 16px;
   color: #e1251b;
 }
+.banner-area {
+  height: 380px;
+  width: 880px;
+}
+
 .banner-area img{
-  width: 100%;
   height: 100%;
   border-radius: 16px;
 }
 .carousel {
   overflow: hidden;
   border-radius: 16px;
+  height: 380px;
+  position: relative;
 }
 
 .carousel-item img {
   z-index: 1;
-  width: 920px;
-  height: 360px;
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
   margin-bottom: -5px;
 }
 
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.carousel:hover .carousel-btn {
+  opacity: 1;
+  visibility: visible;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.carousel-btn span {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.carousel-prev {
+  left: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.carousel-next {
+  right: 0;
+  border-radius: 8px 0 0 8px;
+}
+
 .carousel-dots {
-  position: relative;
+  position: absolute;
   z-index: 2;
   bottom: 20px;
-  left: 100%;
+  left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
@@ -317,12 +406,33 @@ onUnmounted(() => {
   background: #fff;
 }
 
+.right-area {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 230px;
+}
+
+.right-img-item {
+  width: 100%;
+  height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.right-img-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+
 .goods-section {
-  width: 1200px;
+  width: 1400px;
   margin: 20px auto;
   background: #fff;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 16px;
 }
 
 .section-title {
@@ -345,14 +455,14 @@ onUnmounted(() => {
 
 .goods-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
 
 .goods-item {
   border: 1px solid #eee;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 16px;
   cursor: pointer;
   transition: all 0.3s;
 }
