@@ -199,10 +199,14 @@ onUnmounted(() => {
 
 .search-box {
   flex: 1;
+  position: relative;
+  left: 200px;
+  /* align-items: center; */
 }
 
 .search-input {
   width: 500px;
+  border-radius: 1px solid #e1251b;
 }
 
 .search-btn {
@@ -268,7 +272,9 @@ onUnmounted(() => {
 }
 
 .category-item:hover {
-  background: #f7f7f7;
+  background: #fff;
+  margin-left: 10px;
+  border-radius: 16px 0px 0px 16px;
   color: #e1251b;
 }
 .banner-area img{
