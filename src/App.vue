@@ -1,12 +1,9 @@
 <template>
   <div class="common-layout">
-    <el-container>
-      <el-header>
-        <TopNav />
-      </el-header>
-      <el-main>Main</el-main>
-      <el-footer>
-        <el-descriptions
+    <router-view />
+
+    <el-footer>
+      <el-descriptions
     title="页面信息"
     :column="4"
     :size="size"
@@ -23,17 +20,14 @@
       上海、杭州、苏州、南京、深圳、厦门
     </el-descriptions-item>
   </el-descriptions>
-      </el-footer>
-    </el-container>
+    </el-footer>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import type { ComponentSize } from 'element-plus'
-
-import TopNav from './views/headerView.vue'
+import { el } from 'element-plus/es/locales.mjs'
 
 const size = ref<ComponentSize>('default')
 
@@ -54,8 +48,12 @@ const blockMargin = computed(() => {
   margin-top: 20px;
 }
 .common-layout {
-  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+}
+.el-footer {
   width: 1200px;
   margin: 0 auto;
+  padding: 20px 0;
 }
 </style>
