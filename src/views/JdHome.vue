@@ -282,15 +282,17 @@ onUnmounted(() => {
 }
 
 .carousel-item img {
+  z-index: 1;
   width: 920px;
   height: 360px;
   margin-bottom: -5px;
 }
 
 .carousel-dots {
-  position: absolute;
-  bottom: 10px;
-  left: 58%;
+  position: relative;
+  z-index: 2;
+  bottom: 20px;
+  left: 100%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
